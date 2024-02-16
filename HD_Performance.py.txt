@@ -1,0 +1,46 @@
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+import pandas as pd
+
+from sklearn.neighbors import KNeighborsClassifier
+
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score,precision_score
+
+
+
+# Dataset Loading...
+df=pd.read_csv("Breast_cancer_data.csv")
+
+
+
+#Features Extractions
+
+y_train=df["diagnosis"]
+#print(y_train)
+
+del df["diagnosis"]
+x_train=df
+#print(df)
+
+
+X_train, X_test, y_train, y_test = train_test_split(x_train, y_train, test_size=0.3, random_state=29)
+
+#Declaration of ML Model
+clf_knn=KNeighborsClassifier(n_neighbors=3)
+
+# Training the ML model
+clf_knn.fit(X_train,y_train)
+
+#New Data Points
+#x_test=[[62,0,2,160,4,268,140,0]]
+
+pre_res=clf_knn.predict(X_test)
+
+print(accuracy_score(y_test,pre_res)*100)
+
+print(precision_score(y_test,pre_res,average="macro")*100)
+
+
+
